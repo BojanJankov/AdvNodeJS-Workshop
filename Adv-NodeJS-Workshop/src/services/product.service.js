@@ -12,10 +12,15 @@ export class ProductService {
     }
 
     if (basicFilters?.stock) basicFilters.stock = { $gt: 0 };
+    if (basicFilters?.rating) {
+      basicFilters.rating = { $gte: Number(basicFilters.rating) };
+    }
 
     const products = await Product.find(basicFilters).sort(sortFilters);
 
-    return products;
+    const countOfDocuments = await Product.countDocuments();
+
+    return { products, totalDoc: countOfDocuments };
   }
   static async getProductById(productId) {
     const foundProduct = await Product.findById(productId);
