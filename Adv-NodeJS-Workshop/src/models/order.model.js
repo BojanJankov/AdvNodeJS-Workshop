@@ -1,0 +1,20 @@
+import { Schema, model } from "mongoose";
+
+const orderSchema = new Schema({
+  date: {
+    type: String,
+    required: true,
+  },
+  user: {
+    type: String,
+    required: true,
+  },
+  products: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Product",
+    },
+  ],
+});
+
+export const Order = model("Order", orderSchema);
