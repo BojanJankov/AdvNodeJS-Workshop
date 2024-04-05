@@ -1,5 +1,7 @@
 import { Order } from "../models/order.model.js";
 import { Product } from "../models/product.model.js";
+import { User } from "../models/user.model.js";
+
 export class OrderService {
   static async getAllOrders() {
     const orders = await Order.find({});
@@ -7,11 +9,15 @@ export class OrderService {
     return orders;
   }
   static async getOrderById(orderId) {
-    const foundOrder = await Order.findById(orderId).populate({
-      path: "products",
-      model: Product,
-      select: "title stock description category price rating",
-    });
+    const foundOrder = await Order.findById(orderId)
+      .populate({
+        path: "user",
+        model: User,
+      })
+      .populate({
+        path: "products",
+        model: Product,
+      });
 
     if (!foundOrder) throw new Error("Order Not Found");
 
@@ -19,6 +25,16 @@ export class OrderService {
   }
   static async createOrder(orderData) {
     const newOrder = new Order(orderData);
+
+    const foundUser = await User.findById(newOrder.user);
+
+    if (!foundUser) throw new Error("User Not Found");
+
+    foundUser.orders.push(newOrder._id);
+
+    console.log(newOrder._id);
+
+    foundUser.save();
 
     const order = await newOrder.save();
 
