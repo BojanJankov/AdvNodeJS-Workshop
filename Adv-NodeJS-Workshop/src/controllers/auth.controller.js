@@ -24,4 +24,13 @@ export class ClientController {
       return res.status(404).json({ msg: error.message });
     }
   }
+  static async loginClient(req, res) {
+    try {
+      const client = await ClientService.loginClient(req.body);
+
+      return res.json(client);
+    } catch (error) {
+      return res.status(404).json({ msg: error.message });
+    }
+  }
 }

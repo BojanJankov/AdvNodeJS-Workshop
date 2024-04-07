@@ -22,4 +22,14 @@ const clientSchema = new Schema({
   },
 });
 
+// Function that take client and convert to Object and delete password field from him and return without password, called last in register service
+clientSchema.methods.toJSON = function () {
+  const client = this;
+  const clientObj = client.toObject();
+
+  delete clientObj.password;
+
+  return clientObj;
+};
+
 export const Client = model("Client", clientSchema);

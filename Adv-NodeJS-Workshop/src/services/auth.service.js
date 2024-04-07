@@ -27,12 +27,35 @@ export class ClientService {
 
     const hashedPassword = await bcrypt.hash(password, 8);
 
-    const newClient = new Client(firstName, lastName, email, hashedPassword);
+    const newClient = new Client({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
+    });
 
     const createdClient = await newClient.save();
 
-    delete createdClient.password;
+    // Method for deleting password field when we return client data in response(created in client.model.js file)
+    createdClient.toJSON();
 
     return createdClient;
+  }
+
+  static async loginClient({ password, email }) {
+    const clients = await this.getAllClients();
+
+    const foundClient = clients.find((client) => client.email === email);
+
+    if (!foundClient) throw new Error("Invalid Credentials!");
+
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      foundClient.password
+    );
+
+    if (!isPasswordValid) throw new Error("Invalid Credentials!");
+
+    return foundClient;
   }
 }
