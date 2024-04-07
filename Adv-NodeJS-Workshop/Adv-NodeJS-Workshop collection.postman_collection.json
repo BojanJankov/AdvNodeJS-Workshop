@@ -138,6 +138,22 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "get all clients",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "register client",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
 		}
 	]
 }
