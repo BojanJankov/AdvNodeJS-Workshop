@@ -20,6 +20,7 @@ const clientSchema = new Schema({
     required: true,
     minLength: 8,
   },
+  refreshTokens: [{ type: String }],
 });
 
 // Function that take client and convert to Object and delete password field from him and return without password, called last in register service

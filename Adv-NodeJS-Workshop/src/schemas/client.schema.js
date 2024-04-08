@@ -5,4 +5,5 @@ export const clientJoiSchema = Joi.object({
   lastName: Joi.string().min(2).required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(8).required(),
+  refreshTokens: Joi.array().items(Joi.string()),
 });

@@ -58,4 +58,23 @@ export class ClientService {
 
     return foundClient;
   }
+
+  static async saveRefreshToken(clientId, token) {
+    const foundClient = await this.getClientById(clientId);
+
+    if (!foundClient) throw new Error();
+
+    foundClient.refreshTokens.push(token);
+
+    await foundClient.save();
+  }
+  static async deleteAllRefreshTokens(clientId) {
+    const foundClient = await this.getClientById(clientId);
+
+    if (!foundClient) throw new Error();
+
+    foundClient.refreshTokens = [];
+
+    await foundClient.save();
+  }
 }
