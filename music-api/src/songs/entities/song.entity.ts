@@ -1,8 +1,10 @@
+import { Album } from 'src/albums/entities/album.entity';
 import { Artist } from 'src/artists/entities/artist.entity';
 import {
   Column,
   Entity,
   JoinColumn,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -27,4 +29,7 @@ export class Song {
   @ManyToOne(() => Artist, (artist) => artist.songs)
   @JoinColumn()
   artist: Artist;
+
+  @ManyToMany(() => Album, (album) => album.songs)
+  albums: Album[];
 }

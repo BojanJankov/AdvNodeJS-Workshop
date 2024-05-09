@@ -1,4 +1,5 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsArray, IsNumber, IsString } from 'class-validator';
+import { Album } from '../entities/album.entity';
 
 export class CreateAlbumDto {
   @IsString()
@@ -15,4 +16,7 @@ export class CreateAlbumDto {
 
   @IsNumber()
   numberOfSales: number;
+
+  @IsNumber({}, { each: true })
+  songs: number[];
 }

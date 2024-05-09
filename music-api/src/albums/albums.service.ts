@@ -12,6 +12,7 @@ export class AlbumsService {
     const newAlbum = this.albumsRepo.create({
       ...createAlbumDto,
       artist: { id: createAlbumDto.artistId },
+      songs: createAlbumDto.songs.map((id) => ({ id })),
     });
 
     await this.albumsRepo.save(newAlbum);
