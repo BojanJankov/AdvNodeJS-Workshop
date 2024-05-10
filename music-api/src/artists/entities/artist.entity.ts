@@ -19,9 +19,9 @@ export class Artist {
   @Column()
   age: number;
 
-  @OneToMany(() => Song, (song) => song.artist)
+  @OneToMany(() => Song, (song) => song.artist, { onDelete: 'CASCADE' })
   songs: Song[];
 
-  @OneToMany(() => Album, (album) => album.artist)
+  @OneToMany(() => Album, (album) => album.artist, { onDelete: 'CASCADE' })
   albums: Album[];
 }

@@ -25,7 +25,13 @@ export class AlbumsService {
   }
 
   findOne(id: number) {
-    const foundAlbum = this.albumsRepo.findOne({ where: { id } });
+    const foundAlbum = this.albumsRepo.findOne({
+      where: { id },
+      relations: {
+        artist: true,
+        songs: true,
+      },
+    });
 
     if (!foundAlbum) throw new NotFoundException('Album Not Found');
 
